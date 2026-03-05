@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luc | Software Developer Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Light Mode Variables */
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --accent-color: #0284c7;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --border-color: #cbd5e1;
+            --nav-bg: rgba(248, 250, 252, 0.95);
+            --card-text: #0f172a;
+        }
+
+        /* Dark Mode Variables (Midnight Purple Theme) */
+        [data-theme="dark"] {
+            --bg-color: #0b032d; 
+            --card-bg: #16084a; 
+            --accent-color: #00f0ff; 
+            --text-main: #f8fafc;
+            --text-muted: #b4a5d8; 
+            --border-color: #2d1b6e; 
+            --nav-bg: rgba(11, 3, 45, 0.95); 
+            --card-text: #f8fafc;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+
+        /* OVERRIDE BOOTSTRAP DEFAULTS */
+        .text-muted { color: var(--text-muted) !important; }
+        
+        code, .monospace { font-family: 'Fira Code', monospace; }
+
+        .accent { color: var(--accent-color); transition: color 0.3s, text-shadow 0.3s; }
+        
+        [data-theme="dark"] .accent {
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3); 
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .navbar-brand, .nav-link { color: var(--text-main) !important; }
+
+        /* Hero Section & Profile Image */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .profile-img-container {
+            margin-bottom: 0;
+        }
+        
+        .profile-img {
+            width: 400px;   /* Massive width for desktop */
+            height: 520px;  /* Huge portrait height */
+            max-width: 90vw; /* Safety net: stops it from breaking on mobile screens */
+            border-radius: 24px; /* Softer, modern corners for the large size */
+            object-fit: cover; 
+            object-position: top center; /* Focuses near the top to keep your face perfectly framed */
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5); /* Bigger neon glow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.7);
+        }
+
+        /* Hero Side Boxes (Left & Right Panels) */
+        .hero-side-box {
+            background-color: rgba(22, 8, 74, 0.6); /* Transparent purple */
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .hero-side-box:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        /* Progress Bars */
+        .progress {
+            background-color: var(--border-color);
+            height: 8px;
+            border-radius: 10px;
+        }
+        .progress-bar {
+            background-color: var(--accent-color);
+            border-radius: 10px;
+            box-shadow: 0 0 8px var(--accent-color); 
+        }
+
+        /* Project & Experience Cards */
+        .project-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            height: 100%;
+            color: var(--card-text);
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.15);
+        }
+
+        /* Badges */
+        .badge.border {
+            background-color: var(--card-bg) !important;
+            color: var(--text-main) !important;
+            border-color: var(--border-color) !important;
+        }
+
+        /* Contact Form */
+        .form-control {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        .form-control:focus {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(0, 240, 255, 0.25);
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            color: var(--text-muted);
+            transition: border-color 0.3s;
+        }
+        
+        /* Buttons */
+        .btn-outline-info {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+        .btn-outline-info:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <nav class="navbar navbar-expand-lg fixed-top" data-aos="fade-down" data-aos-duration="800">
+        <div class="container">
+            <a class="navbar-brand monospace fw-bold" href="#">&lt;LUC /&gt;</a>
+            <div class="ms-auto d-flex align-items-center">
+                <a href="#projects" class="nav-link d-inline-block me-3">Projects</a>
+                <a href="#contact" class="btn btn-outline-info btn-sm me-2">Contact</a>
+                <button id="theme-toggle" class="btn btn-secondary btn-sm monospace" style="background-color: var(--card-bg); border-color: var(--border-color);">🌓 Theme</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero container" data-aos="zoom-in" data-aos-duration="1000">
+        
+        <div class="row align-items-center justify-content-center mb-5">
+            
+            <div class="col-md-3 d-none d-lg-block" data-aos="fade-right" data-aos-delay="300">
+                <div class="hero-side-box p-4 text-start">
+                    <h6 class="accent monospace mb-2">&gt; _status</h6>
+                    <p class="text-muted small mb-4">Available for full-time and freelance opportunities.</p>
+                    
+                    <h6 class="accent monospace mb-2">&gt; _focus</h6>
+                    <p class="text-muted small mb-0">System Architecture &<br>Full-Stack Logic.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 text-center">
+                <div class="profile-img-container mx-auto mb-0">
+                    <img src="images/profile.jpg" alt="Luc Profile Image" class="profile-img">
+                </div>
+            </div>
+
+            <div class="col-md-3 d-none d-lg-block" data-aos="fade-left" data-aos-delay="300">
+                <div class="hero-side-box p-4 text-start">
+                    <h6 class="accent monospace mb-2">&gt; _current_build</h6>
+                    <p class="text-muted small mb-4">LabLinx Reservation System (DLSU-D).</p>
+                    
+                    <h6 class="accent monospace mb-2">&gt; _base</h6>
+                    <p class="text-muted small mb-0">Cavite, Philippines<br>Local Time: PHT</p>
+                </div>
+            </div>
+
+        </div>
+
+        <h1 class="display-1 fw-bold mb-3 mt-4">Hi, I'm <span class="accent">Luc</span>.</h1>
+        <p class="lead monospace text-muted mb-4">
+            Full Stack Developer | Graduating Info Tech Student (BIT44)
+        </p>
+        <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
+            <span class="badge border" data-aos="fade-up" data-aos-delay="100">C#</span>
+            <span class="badge border" data-aos="fade-up" data-aos-delay="200">ASP.NET</span>
+            <span class="badge border" data-aos="fade-up" data-aos-delay="300">Node.js</span>
+            <span class="badge border" data-aos="fade-up" data-aos-delay="400">MongoDB</span>
+            <span class="badge border" data-aos="fade-up" data-aos-delay="500">PHP</span>
+            <span class="badge border" data-aos="fade-up" data-aos-delay="600">C++</span>
+        </div>
+        
+        <div class="d-flex justify-content-center gap-3 mt-4" data-aos="fade-up" data-aos-delay="700">
+            <a href="https://github.com/yourusername" target="_blank" class="btn btn-outline-info px-4"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://linkedin.com/in/yourusername" target="_blank" class="btn btn-outline-info px-4"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="Luc_Resume.pdf" download class="btn w-100 fw-bold px-4" style="background-color: var(--accent-color); color: var(--bg-color); max-width: 200px;"><i class="fas fa-file-download"></i> Download CV</a>
+        </div>
+    </header>
+
+    <section class="container py-5">
+        <div class="row g-5">
+            <div class="col-md-6" data-aos="fade-right" data-aos-duration="800">
+                <h3 class="mb-4 monospace">&gt; _skills</h3>
+                
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>C# & ASP.NET</span>
+                        <span class="accent">85%</span>
+                    </div>
+                    <div class="progress"><div class="progress-bar" style="width: 85%"></div></div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Node.js & PHP</span>
+                        <span class="accent">80%</span>
+                    </div>
+                    <div class="progress"><div class="progress-bar" style="width: 80%"></div></div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Database (MongoDB)</span>
+                        <span class="accent">85%</span>
+                    </div>
+                    <div class="progress"><div class="progress-bar" style="width: 85%"></div></div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>C++</span>
+                        <span class="accent">70%</span>
+                    </div>
+                    <div class="progress"><div class="progress-bar" style="width: 70%"></div></div>
+                </div>
+            </div>
+            
+            <div class="col-md-6" data-aos="fade-left" data-aos-duration="800">
+                <h3 class="mb-4 monospace">&gt; _about_me</h3>
+                <p class="text-muted">
+                    I am a passionate developer focused on creating robust backend architectures and efficient full-stack web applications. 
+                    I enjoy tackling complex logic, writing clean code across multiple languages, and turning ideas into functional, hosted systems.
+                </p>
+                <p class="text-muted mb-5">
+                    Currently specializing in system monitoring, database management, and university lab management software.
+                </p>
+
+                <h4 class="mb-3 monospace accent" style="font-size: 1.2rem;">&gt; _interests</h4>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge border border-secondary text-muted px-3 py-2" style="background-color: var(--card-bg);"><i class="fas fa-gamepad me-2 text-info"></i>Gaming</span>
+                    <span class="badge border border-secondary text-muted px-3 py-2" style="background-color: var(--card-bg);"><i class="fas fa-basketball-ball me-2 text-info"></i>Sports</span>
+                    <span class="badge border border-secondary text-muted px-3 py-2" style="background-color: var(--card-bg);"><i class="fas fa-camera me-2 text-info"></i>Photo & Video Editing</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resume" class="container py-5">
+        <div class="row g-5">
+            
+            <div class="col-md-6" data-aos="fade-right" data-aos-duration="800">
+                <h3 class="mb-4 monospace">&gt; _experience</h3>
+                
+                <div class="card project-card p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap">
+                        <h4 class="accent mb-0">Software Dev Intern</h4>
+                        <span class="badge border border-info text-info mt-2 mt-sm-0">Jan 2026 - Present</span>
+                    </div>
+                    <h6 class="text-muted"><i class="fas fa-building me-2"></i>Knowles Training Institute</h6>
+                    <hr class="border-secondary opacity-25">
+                    <ul class="text-muted small mb-0">
+                        <li class="mb-2">Completing a comprehensive 480-hour professional internship program.</li>
+                        <li class="mb-2">Applying full-stack development skills and utilizing <strong>AI tools</strong> to accelerate and optimize real-world software solutions.</li>
+                        <li>Adapting to agile professional workflows, team collaboration, and modern coding practices.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-6" data-aos="fade-left" data-aos-duration="800">
+                <h3 class="mb-4 monospace">&gt; _education</h3>
+                
+                <div class="card project-card p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap">
+                        <h4 class="accent mb-0">BS Information Technology</h4>
+                        <span class="badge border border-info text-info mt-2 mt-sm-0">Graduating</span>
+                    </div>
+                    <h6 class="text-muted"><i class="fas fa-university me-2"></i>De La Salle University - Dasmariñas</h6>
+                    <hr class="border-secondary opacity-25">
+                    <ul class="text-muted small mb-0">
+                        <li class="mb-2"><strong>Graduating Student (BIT44)</strong> in the College of Computer Studies and Information Technology (CICS).</li>
+                        <li class="mb-2">Core developer in the <strong>DEVTRIO</strong> capstone team.</li>
+                        <li>Specializing in web-based system architecture, database management, and UI/UX implementation.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="projects" class="container py-5">
+        <h2 class="text-center mb-5 monospace" data-aos="fade-up">featured_projects</h2>
+        <div class="row g-4 justify-content-center">
+            
+            <div class="col-md-6" data-aos="zoom-in-up" data-aos-duration="800">
+                <div class="card project-card p-4 h-100">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h3 class="card-title accent">LabLinx DLSU-D</h3>
+                            <span class="badge border-0" style="background-color: var(--accent-color); color: var(--bg-color);">Live Now</span>
+                        </div>
+                        <p class="text-muted">
+                            A high-performance monitoring, borrowing, and reservation system designed for the 
+                            College of CICS at De La Salle University - Dasmariñas.
+                        </p>
+                        <ul class="text-muted small mb-4">
+                            <li>Real-time laboratory equipment tracking.</li>
+                            <li>Integrated reservation workflow for students and faculty.</li>
+                            <li>Automated status updates and inventory management.</li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="https://lablinx-dlsu-d-xf2i.onrender.com/" target="_blank" class="btn w-100 fw-bold" style="background-color: var(--accent-color); color: var(--bg-color);"><i class="fas fa-external-link-alt me-2"></i>Open System</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6" data-aos="zoom-in-up" data-aos-duration="800" data-aos-delay="200">
+                <div class="card project-card p-4 h-100">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h3 class="card-title accent">NOMAD Travel Blog</h3>
+                            <span class="badge border border-info text-info">Front-End</span>
+                        </div>
+                        <p class="text-muted">
+                            A dynamic travel blogging platform focused on visual storytelling, integrating custom photography layouts and aesthetics.
+                        </p>
+                        <ul class="text-muted small mb-4">
+                            <li>Custom grid layouts for photo-heavy content.</li>
+                            <li>Responsive design for mobile travelers.</li>
+                            <li>Integrated photo-editing aesthetic themes.</li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="#" class="btn btn-outline-info w-100 fw-bold"><i class="fab fa-github me-2"></i>View Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contact" class="container py-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center" data-aos="fade-up" data-aos-duration="800">
+                <h2 class="monospace mb-4">get_in_touch</h2>
+                <form action="https://formspree.io/f/your-id" method="POST" class="text-start">
+                    <div class="mb-3">
+                        <input type="text" name="name" class="form-control p-3" placeholder="Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" name="email" class="form-control p-3" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="message" class="form-control p-3" rows="4" placeholder="Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn w-100 p-3 fw-bold" style="background-color: var(--accent-color); color: var(--bg-color);">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center">
+        <div class="container">
+            <p class="monospace">Created by Luc // 2026</p>
+            <p class="small text-muted">Built using HTML, CSS Variables, and JavaScript</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        // 1. Initialize AOS Animations
+        AOS.init({
+            once: true,
+            offset: 100,
+        });
+
+        // 2. Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const bodyElement = document.body;
+        const currentSavedTheme = localStorage.getItem('portfolioTheme') || 'dark';
+        bodyElement.setAttribute('data-theme', currentSavedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            let currentTheme = bodyElement.getAttribute('data-theme');
+            let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            bodyElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('portfolioTheme', newTheme); 
+        });
+    </script>
+</body>
+</html>
