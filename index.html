@@ -404,6 +404,88 @@
     50%      { transform: translate(20px, 20px) scale(1.2); }
   }
 
+  /* ── Awards ── */
+  #awards { background: var(--black); }
+  #awards::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 47px,
+      var(--rule) 47px, var(--rule) 48px
+    );
+    pointer-events: none;
+  }
+  .awards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 40px;
+  }
+  .award-card {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    padding: 32px;
+    border: 1px solid var(--dim);
+    background: linear-gradient(135deg, #0e0e0e, #161616);
+    border-left: 3px solid var(--glow);
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    position: relative;
+  }
+  .award-card:hover {
+    border-color: var(--white);
+    border-left-color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(255,255,255,0.06);
+  }
+  .award-icon {
+    font-size: 28px;
+    color: var(--glow);
+    min-width: 40px;
+    text-align: center;
+    margin-top: 4px;
+    filter: drop-shadow(0 0 8px rgba(192,192,192,0.4));
+    transition: color 0.3s;
+  }
+  .award-card:hover .award-icon { color: var(--white); }
+  .award-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .award-desc {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--gray);
+  }
+
+  /* ── Project bullets ── */
+  .proj-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .proj-bullets li {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--gray);
+    padding-left: 18px;
+    position: relative;
+  }
+  .proj-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--glow);
+    font-weight: 700;
+  }
+
   /* ── Work ── */
   #work { background: var(--black); }
   #work::before {
@@ -835,6 +917,7 @@
     .hero-ctas { flex-direction: column; gap: 12px; width: 100%; }
     .cta-button { width: 100%; justify-content: center; }
     .av-box { width: 260px; height: 320px; }
+    .awards-grid { grid-template-columns: 1fr; }
     .project-item { grid-template-columns: 50px 1fr; gap: 16px; }
     .proj-cat, .proj-year, .proj-icon { display: none; }
     .nav-links { gap: 20px; }
@@ -865,6 +948,7 @@
   <ul class="nav-links">
     <li><a href="#hero" class="magnetic"><i class="fa-regular fa-user nav-icon"></i>About</a></li>
     <li><a href="#work" class="magnetic"><i class="fa-regular fa-folder nav-icon"></i>Work</a></li>
+    <li><a href="#awards" class="magnetic"><i class="fa-solid fa-trophy nav-icon"></i>Awards</a></li>
     <li><a href="#contact" class="magnetic"><i class="fa-regular fa-envelope nav-icon"></i>Contact</a></li>
   </ul>
 </nav>
@@ -948,18 +1032,28 @@
     <div class="project-item reveal has-detail">
       <span class="proj-num">001</span>
       <span class="proj-title"><i class="fa-solid fa-flask proj-icon"></i> LabLinx — Lab Reservation &amp; Monitoring System</span>
-      <span class="proj-cat">Full Stack · Express.js · MongoDB</span>
-      <span class="proj-year">2026 <i class="fa-solid fa-chevron-down proj-expand-icon"></i></span>
+      <span class="proj-cat">Web Developer Lead · Node.js · MongoDB</span>
+      <span class="proj-year">2025–2026 <i class="fa-solid fa-chevron-down proj-expand-icon"></i></span>
       <span class="proj-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
       <div class="project-detail">
+        <h4>Overview</h4>
+        <div class="tech-category">
+          <ul class="proj-bullets">
+            <li>Led development of a laboratory reservation and monitoring system designed for 3,000+ students, faculty, and laboratory personnel at DLSU-D.</li>
+            <li>Implemented real-time monitoring, automated notifications, and barcode-based asset tracking.</li>
+            <li>Conducted requirements gathering, system analysis, and user validation.</li>
+            <li>Nominated for Best Thesis/Capstone Project (2026).</li>
+          </ul>
+        </div>
         <h4>System Features</h4>
         <div class="tech-category">
           <div class="tech-stack">
             <span class="tech-badge"><i class="fa-solid fa-calendar-check"></i> Lab Reservation</span>
             <span class="tech-badge"><i class="fa-solid fa-chart-line"></i> Real-time Monitoring</span>
-            <span class="tech-badge"><i class="fa-solid fa-bell"></i> Automated Email Reminders</span>
+            <span class="tech-badge"><i class="fa-solid fa-bell"></i> Automated Notifications</span>
             <span class="tech-badge"><i class="fa-solid fa-microchip"></i> IoT Integration</span>
-            <span class="tech-badge"><i class="fa-solid fa-barcode"></i> Barcode Equipment Tracking</span>
+            <span class="tech-badge"><i class="fa-solid fa-barcode"></i> Barcode Asset Tracking</span>
+            <span class="tech-badge"><i class="fa-solid fa-trophy"></i> Best Thesis Nominee 2026</span>
           </div>
         </div>
         <h4>Tech Stack</h4>
@@ -985,15 +1079,28 @@
             <span class="tech-badge"><i class="fa-solid fa-hard-drive"></i> connect-mongo 6.0</span>
           </div>
         </div>
+        <div class="tech-category">
+          <div class="tech-category-label">Deployment</div>
+          <div class="tech-stack">
+            <span class="tech-badge"><i class="fa-solid fa-rocket"></i> Vercel</span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="project-item reveal has-detail">
-      <span class="proj-num">006</span>
-      <span class="proj-title"><i class="fa-solid fa-utensils proj-icon"></i> Jemrald Foodhouse — Japanese Restaurant Platform</span>
-      <span class="proj-cat">Full Stack · React · Supabase</span>
+      <span class="proj-num">002</span>
+      <span class="proj-title"><i class="fa-solid fa-utensils proj-icon"></i> Jemrald Foodhouse — Restaurant Platform</span>
+      <span class="proj-cat">Full-Stack Developer · React · Supabase</span>
       <span class="proj-year">2026 <i class="fa-solid fa-chevron-down proj-expand-icon"></i></span>
       <span class="proj-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
       <div class="project-detail">
+        <h4>Overview</h4>
+        <div class="tech-category">
+          <ul class="proj-bullets">
+            <li>Built a restaurant ordering and management platform with inventory monitoring and order tracking.</li>
+            <li>Developed customer, administrative, and analytics modules.</li>
+          </ul>
+        </div>
         <h4>Architecture</h4>
         <div class="tech-category">
           <div class="tech-stack">
@@ -1069,10 +1176,17 @@
     <div class="project-item reveal has-detail">
       <span class="proj-num">003</span>
       <span class="proj-title"><i class="fa-solid fa-id-card proj-icon"></i> Umonics — HR Dashboard &amp; Intern Management System</span>
-      <span class="proj-cat">React · Vite · Tailwind CSS</span>
+      <span class="proj-cat">Front-End Developer · React · Tailwind</span>
       <span class="proj-year">2026 <i class="fa-solid fa-chevron-down proj-expand-icon"></i></span>
       <a href="https://umonics-attendance-reporting-system-six.vercel.app/" target="_blank" class="proj-arrow" onclick="event.stopPropagation()"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       <div class="project-detail">
+        <h4>Overview</h4>
+        <div class="tech-category">
+          <ul class="proj-bullets">
+            <li>Developed and maintained user-facing interfaces for attendance tracking and report generation workflows.</li>
+            <li>Improved UI consistency, usability, and workflow efficiency.</li>
+          </ul>
+        </div>
         <h4>Key Features</h4>
         <div class="tech-category">
           <div class="tech-stack">
@@ -1107,10 +1221,34 @@
   </div>
 </section>
 
+<!-- ── AWARDS ── -->
+<section id="awards">
+  <div class="work-header">
+    <p class="section-label"><span class="section-num">03</span> <i class="fa-solid fa-trophy"></i> Recognition</p>
+  </div>
+  <h2 class="work-heading reveal">AWARDS</h2>
+  <div class="awards-grid reveal">
+    <div class="award-card">
+      <div class="award-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+      <div class="award-body">
+        <h3 class="award-title">Dean's List Recipient</h3>
+        <p class="award-desc">Recognized for academic excellence at De La Salle University – Dasmariñas.</p>
+      </div>
+    </div>
+    <div class="award-card">
+      <div class="award-icon"><i class="fa-solid fa-flask"></i></div>
+      <div class="award-body">
+        <h3 class="award-title">Best Thesis / Capstone Nominee</h3>
+        <p class="award-desc">LabLinx nominated for Best Thesis/Capstone Project at DLSU-D (2026) — a lab reservation and monitoring system built for 3,000+ users.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── CONTACT ── -->
 <section id="contact">
   <div class="contact-bg-text">CONTACT</div>
-  <p class="section-label contact-label"><span class="section-num">03</span> <i class="fa-solid fa-paper-plane"></i> Get in Touch</p>
+  <p class="section-label contact-label"><span class="section-num">04</span> <i class="fa-solid fa-paper-plane"></i> Get in Touch</p>
   <h2 class="contact-heading reveal">
     LET'S<br><em>WORK</em><br>TOGETHER
   </h2>
