@@ -486,6 +486,131 @@
     font-weight: 700;
   }
 
+  /* ── Education & Experience ── */
+  #edu { background: var(--black); position: relative; }
+  #edu::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 47px,
+      var(--rule) 47px, var(--rule) 48px
+    );
+    pointer-events: none;
+  }
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 48px;
+  }
+  .edu-col-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--glow);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .edu-col-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--dim);
+  }
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .tl-item {
+    display: flex;
+    gap: 24px;
+    position: relative;
+    padding-bottom: 36px;
+  }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 16px;
+    padding-top: 6px;
+  }
+  .tl-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--glow);
+    border: 2px solid var(--black);
+    box-shadow: 0 0 8px var(--glow);
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+  .tl-item:hover .tl-dot { transform: scale(1.5); }
+  .tl-line {
+    flex: 1;
+    width: 1px;
+    background: var(--dim);
+    margin-top: 6px;
+  }
+  .tl-item:last-child .tl-line { display: none; }
+  .tl-body { flex: 1; }
+  .tl-period {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--glow);
+    margin-bottom: 6px;
+  }
+  .tl-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .tl-subtitle {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+  .tl-bullets {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .tl-bullets li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gray);
+    padding-left: 16px;
+    position: relative;
+  }
+  .tl-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--glow);
+    font-weight: 700;
+  }
+  .tl-tag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 4px 12px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border: 1px solid var(--dim);
+    color: var(--gray);
+    background: rgba(255,255,255,0.02);
+    border-radius: 2px;
+  }
+  @media (max-width: 768px) {
+    .edu-grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+
   /* ── Work ── */
   #work { background: var(--black); }
   #work::before {
@@ -947,6 +1072,7 @@
   <a href="#hero" class="nav-logo magnetic">LU</a>
   <ul class="nav-links">
     <li><a href="#hero" class="magnetic"><i class="fa-regular fa-user nav-icon"></i>About</a></li>
+    <li><a href="#edu" class="magnetic"><i class="fa-solid fa-book-open nav-icon"></i>Education</a></li>
     <li><a href="#work" class="magnetic"><i class="fa-regular fa-folder nav-icon"></i>Work</a></li>
     <li><a href="#awards" class="magnetic"><i class="fa-solid fa-trophy nav-icon"></i>Awards</a></li>
     <li><a href="#contact" class="magnetic"><i class="fa-regular fa-envelope nav-icon"></i>Contact</a></li>
@@ -1021,10 +1147,63 @@
   </div>
 </div>
 
+<!-- ── EDUCATION & EXPERIENCE ── -->
+<section id="edu">
+  <div class="work-header">
+    <p class="section-label"><span class="section-num">02</span> <i class="fa-solid fa-book-open"></i> Background</p>
+  </div>
+  <h2 class="work-heading reveal">EDUCATION &amp; EXPERIENCE</h2>
+
+  <div class="edu-grid reveal">
+    <!-- Education column -->
+    <div class="edu-col">
+      <div class="edu-col-label"><i class="fa-solid fa-graduation-cap"></i> Education</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot-wrap">
+            <div class="tl-dot"></div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-body">
+            <div class="tl-period">2021 – 2026</div>
+            <div class="tl-title">De La Salle University – Dasmariñas</div>
+            <div class="tl-subtitle">B.S. Information Technology, Major in Web Development</div>
+            <span class="tl-tag"><i class="fa-solid fa-medal" style="margin-right:6px;color:var(--glow)"></i>Dean's List Recipient</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience column -->
+    <div class="edu-col">
+      <div class="edu-col-label"><i class="fa-solid fa-briefcase"></i> Experience</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot-wrap">
+            <div class="tl-dot"></div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-body">
+            <div class="tl-period">Jan 2026 – May 2026</div>
+            <div class="tl-title">Knowles Training Institute</div>
+            <div class="tl-subtitle">IT &amp; Front-End Developer Intern · Singapore (Remote)</div>
+            <ul class="tl-bullets">
+              <li>Developed and enhanced front-end components for a web-based Attendance and Reporting System.</li>
+              <li>Improved application responsiveness and user experience across desktop and mobile devices.</li>
+              <li>Collaborated with supervisors and stakeholders to gather requirements and implement interface improvements.</li>
+              <li>Leveraged AI-powered tools to create and improve digital learning and career course media content.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── WORK ── -->
 <section id="work">
   <div class="work-header">
-    <p class="section-label"><span class="section-num">02</span> <i class="fa-solid fa-briefcase"></i> Selected Work</p>
+    <p class="section-label"><span class="section-num">03</span> <i class="fa-solid fa-briefcase"></i> Selected Work</p>
   </div>
   <h2 class="work-heading reveal">PROJECTS</h2>
 
