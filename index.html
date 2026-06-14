@@ -484,7 +484,7 @@
   /* ── Project Gallery ── */
   .proj-gallery {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 16px;
     margin-top: 16px;
     margin-bottom: 8px;
@@ -783,7 +783,7 @@
       <!-- LabLinx -->
       <div class="proj-item reveal" onclick="toggleProject(this)">
         <div class="proj-img-wrap">
-          <img src="images/lablinx-admin.png" alt="LabLinx — Lab Reservation &amp; Monitoring System" />
+          <img src="images/lablinx-landing.png" alt="LabLinx — Lab Reservation &amp; Monitoring System" />
           <div class="proj-overlay">
             <span class="proj-tag">2025–2026</span>
             <span class="proj-tag">Web Dev Lead</span>
@@ -804,6 +804,10 @@
             </ul>
             <div class="detail-section-title">System Interfaces</div>
             <div class="proj-gallery">
+              <div class="gallery-item">
+                <img src="images/lablinx-admin.png" alt="Super Admin Dashboard" />
+                <div class="gallery-label">Super Admin Dashboard</div>
+              </div>
               <div class="gallery-item">
                 <img src="images/lablinx-scan.png" alt="Live Scan Transaction" />
                 <div class="gallery-label">Live Scan Transaction</div>
