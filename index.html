@@ -28,41 +28,10 @@
     color: var(--white);
     font-family: 'DM Sans', sans-serif;
     font-weight: 300;
-    cursor: none;
+    cursor: default;
     overflow-x: hidden;
     font-size: 20px;
     line-height: 1.7;
-  }
-
-  /* ── Custom cursor ── */
-  #cursor {
-    width: 12px; height: 12px;
-    background: var(--white);
-    border-radius: 50%;
-    position: fixed;
-    top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.2s cubic-bezier(0.16,1,0.3,1), background 0.2s, width 0.3s, height 0.3s;
-    mix-blend-mode: difference;
-  }
-  #cursor.big {
-    transform: scale(5);
-    width: 12px; height: 12px;
-  }
-  #cursor-trail {
-    width: 30px; height: 30px;
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 50%;
-    position: fixed;
-    top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9998;
-    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.3s, width 0.3s, height 0.3s;
-  }
-  #cursor-trail.big {
-    width: 60px; height: 60px;
-    border-color: var(--glow);
   }
 
   /* ── Floating particles ── */
@@ -145,10 +114,12 @@
   /* ── Hero ── */
   #hero {
     min-height: 100vh;
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 60px;
+    align-items: center;
     position: relative;
-    padding: 140px 60px 80px;
+    padding: 160px 80px 100px;
   }
   #hero::before {
     content: '';
@@ -158,132 +129,149 @@
       var(--rule) 47px, var(--rule) 48px
     );
     pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: heroFadeIn 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
+    animation-delay: 0.4s;
+  }
+
+  .hero-visual {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transform: scale(0.96) translateY(30px);
+    animation: heroFadeIn 1s cubic-bezier(0.16,1,0.3,1) forwards;
+    animation-delay: 0.6s;
+  }
+
+  @keyframes heroFadeIn {
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 
   .hero-eyebrow {
     font-family: 'Space Mono', monospace;
-    font-size: 15px; letter-spacing: 6px;
+    font-size: 14px; letter-spacing: 4px;
     color: var(--gray); text-transform: uppercase;
-    margin-bottom: 28px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s ease forwards;
+    margin-bottom: 24px;
     display: flex; align-items: center; gap: 12px;
   }
   .hero-eyebrow .pulse-dot {
     width: 8px; height: 8px;
-    background: var(--glow);
+    background: #00ffaa;
     border-radius: 50%;
     animation: pulse 2s ease infinite;
-    box-shadow: 0 0 10px var(--glow), 0 0 20px var(--glow);
+    box-shadow: 0 0 10px #00ffaa, 0 0 20px #00ffaa;
   }
   @keyframes pulse {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.7); }
+    50% { opacity: 0.4; transform: scale(0.7); }
   }
 
-  .hero-name {
+  .hero-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(100px, 16vw, 220px);
-    line-height: 0.9;
-    letter-spacing: 8px;
-    text-align: center;
+    font-size: clamp(64px, 7vw, 110px);
+    line-height: 1.05;
+    letter-spacing: 2px;
     color: var(--white);
-    position: relative;
-    opacity: 0;
-    animation: fadeUp 1s 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+    margin-bottom: 8px;
   }
-  .hero-name span { display: block; }
-  .hero-name .outline {
-    -webkit-text-stroke: 2px var(--white);
-    color: transparent;
-  }
-  .hero-name .glitch {
-    position: relative;
-  }
-  .hero-name .glitch::before,
-  .hero-name .glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-  }
-  .hero-name .glitch::before {
-    -webkit-text-stroke: 2px var(--glow);
-    color: transparent;
-    animation: glitch1 3s infinite linear alternate-reverse;
-    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-  }
-  .hero-name .glitch::after {
-    -webkit-text-stroke: 2px var(--glow2);
-    color: transparent;
-    animation: glitch2 3s infinite linear alternate-reverse;
-    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-  }
-  @keyframes glitch1 {
-    0%, 95%   { transform: translate(0); }
-    96%       { transform: translate(-4px, -2px); }
-    97%       { transform: translate(4px, 2px); }
-    98%       { transform: translate(-2px, 1px); }
-    99%, 100% { transform: translate(0); }
-  }
-  @keyframes glitch2 {
-    0%, 95%   { transform: translate(0); }
-    96%       { transform: translate(4px, 2px); }
-    97%       { transform: translate(-4px, -2px); }
-    98%       { transform: translate(2px, -1px); }
-    99%, 100% { transform: translate(0); }
+  .gradient-text {
+    background: linear-gradient(90deg, #ffffff 30%, #808080 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
-  .hero-divider {
-    width: 0; height: 2px;
-    background: linear-gradient(90deg, var(--glow), var(--glow2), var(--glow3));
-    margin: 40px auto;
-    animation: expandW 0.7s 1s ease forwards;
-    box-shadow: 0 0 12px var(--glow);
-  }
-  .hero-role {
+  .hero-subtitle {
     font-family: 'Space Mono', monospace;
-    font-size: 16px; letter-spacing: 8px;
-    color: var(--gray); text-transform: uppercase;
-    opacity: 0;
-    animation: fadeUp 0.7s 1.2s ease forwards;
-    display: flex; align-items: center; gap: 16px;
-  }
-  .hero-role i {
-    font-size: 16px;
+    font-size: 18px; letter-spacing: 4px;
     color: var(--glow);
-    animation: spin 4s linear infinite;
+    text-transform: uppercase;
+    margin-bottom: 24px;
   }
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
+
+  .hero-bio {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--gray);
+    margin-bottom: 32px;
+    max-width: 580px;
   }
-  .hero-scroll {
-    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  .hero-bio strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 16px;
+  }
+  .cta-button {
     font-family: 'Space Mono', monospace;
-    font-size: 14px; letter-spacing: 4px;
-    color: var(--gray); text-transform: uppercase;
-    opacity: 0;
-    animation: fadeUp 0.7s 1.6s ease forwards;
-    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    font-size: 14px; letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 28px;
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    display: inline-flex; align-items: center; gap: 10px;
+    border-radius: 4px;
   }
-  .hero-scroll i {
-    animation: bounce 2s ease infinite;
-    font-size: 16px;
+  .cta-button.primary {
+    background: var(--white);
+    color: var(--black);
+    border: 1px solid var(--white);
   }
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(8px); }
+  .cta-button.primary:hover {
+    background: transparent;
+    color: var(--white);
+    box-shadow: 0 0 20px rgba(255,255,255,0.15);
   }
-  .hero-index {
-    position: absolute; right: 60px; bottom: 40px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 140px; color: transparent;
-    -webkit-text-stroke: 1px var(--rule);
-    line-height: 1;
-    opacity: 0;
-    animation: fadeIn 1s 1.5s ease forwards;
-    user-select: none;
+  .cta-button.secondary {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid var(--dim);
+  }
+  .cta-button.secondary:hover {
+    border-color: var(--white);
+    background: rgba(255,255,255,0.02);
+  }
+
+  .hero-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 40px;
+    max-width: 600px;
+  }
+  .skill-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; letter-spacing: 1px;
+    color: var(--gray);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--rule);
+    padding: 6px 12px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    display: flex; align-items: center; gap: 6px;
+    border-radius: 4px;
+  }
+  .skill-badge i { color: var(--glow); font-size: 11px; }
+  .skill-badge:hover {
+    border-color: rgba(255,255,255,0.3);
+    color: var(--white);
+    background: rgba(255,255,255,0.06);
   }
 
   /* ── Marquee ── */
@@ -341,106 +329,7 @@
     color: var(--dim);
   }
 
-  /* ── About ── */
-  #about {
-    background: var(--black);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-  #about::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: repeating-linear-gradient(
-      0deg, transparent, transparent 47px,
-      var(--rule) 47px, var(--rule) 48px
-    );
-    pointer-events: none;
-  }
-  .about-content { position: relative; }
-  .about-heading {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(56px, 7vw, 96px);
-    line-height: 1;
-    letter-spacing: 4px;
-    color: var(--white);
-    margin-bottom: 36px;
-  }
-  .about-heading em {
-    font-style: normal;
-    -webkit-text-stroke: 2px var(--white);
-    color: transparent;
-    background: linear-gradient(90deg, var(--glow), var(--glow3));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 0;
-  }
-  .about-bio {
-    font-size: 20px; line-height: 1.9;
-    color: var(--gray);
-    margin-bottom: 48px;
-    max-width: 500px;
-  }
-  .about-bio strong { color: var(--white); font-weight: 600; }
-  .about-bio .highlight {
-    color: var(--glow);
-    font-weight: 500;
-  }
-  .skills-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-    background: var(--dim);
-    border: 1px solid #555;
-  }
-  .skill-item {
-    background: linear-gradient(135deg, #0e0e0e, #161616);
-    padding: 20px 22px;
-    font-family: 'Space Mono', monospace;
-    font-size: 15px; letter-spacing: 2px;
-    color: #b0b0b0; text-transform: uppercase;
-    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
-    display: flex; align-items: center; gap: 12px;
-    position: relative;
-    overflow: hidden;
-    border-left: 2px solid var(--glow);
-  }
-  .skill-item i {
-    font-size: 18px;
-    color: var(--glow);
-    width: 22px;
-    text-align: center;
-    transition: transform 0.3s, color 0.3s;
-    filter: drop-shadow(0 0 4px rgba(192,192,192,0.4));
-  }
-  .skill-item::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(192,192,192,0.08), rgba(128,128,128,0.08));
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .skill-item:hover {
-    background: var(--white);
-    color: var(--black);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(192,192,192,0.2), 0 0 15px rgba(192,192,192,0.1);
-    border-left-color: var(--black);
-  }
-  .skill-item:hover i {
-    color: var(--black);
-    transform: scale(1.2) rotate(5deg);
-    filter: none;
-  }
-  .skill-item:hover::before { opacity: 1; }
 
-  .about-visual {
-    position: relative;
-    height: 550px;
-    display: flex; align-items: center; justify-content: center;
-  }
   .av-box {
     width: 340px; height: 420px;
     border: 1px solid var(--dim);
@@ -942,15 +831,13 @@
   @media (max-width: 768px) {
     nav { padding: 24px 30px; }
     section { padding: 100px 30px; }
-    #hero { padding: 120px 30px 80px; }
-    #about { grid-template-columns: 1fr; gap: 40px; }
-    .about-visual { height: 300px; }
-    .av-box { width: 240px; height: 300px; }
+    #hero { grid-template-columns: 1fr; padding: 120px 30px 60px; gap: 45px; }
+    .hero-ctas { flex-direction: column; gap: 12px; width: 100%; }
+    .cta-button { width: 100%; justify-content: center; }
+    .av-box { width: 260px; height: 320px; }
     .project-item { grid-template-columns: 50px 1fr; gap: 16px; }
     .proj-cat, .proj-year, .proj-icon { display: none; }
     .nav-links { gap: 20px; }
-    .hero-index { display: none; }
-    .hero-name { font-size: clamp(70px, 14vw, 160px); }
     .contact-links { gap: 10px; }
     .contact-link { padding: 12px 20px; font-size: 13px; }
     .footer-row { flex-direction: column; gap: 12px; text-align: center; }
@@ -969,9 +856,6 @@
 <!-- Scroll progress -->
 <div class="scroll-progress" id="scroll-progress"></div>
 
-<div id="cursor"></div>
-<div id="cursor-trail"></div>
-
 <!-- Floating particles -->
 <div class="particles" id="particles"></div>
 
@@ -979,7 +863,7 @@
 <nav>
   <a href="#hero" class="nav-logo magnetic">LU</a>
   <ul class="nav-links">
-    <li><a href="#about" class="magnetic"><i class="fa-regular fa-user nav-icon"></i>About</a></li>
+    <li><a href="#hero" class="magnetic"><i class="fa-regular fa-user nav-icon"></i>About</a></li>
     <li><a href="#work" class="magnetic"><i class="fa-regular fa-folder nav-icon"></i>Work</a></li>
     <li><a href="#contact" class="magnetic"><i class="fa-regular fa-envelope nav-icon"></i>Contact</a></li>
   </ul>
@@ -987,18 +871,42 @@
 
 <!-- ── HERO ── -->
 <section id="hero">
-  <p class="hero-eyebrow">
-    <span class="pulse-dot"></span>
-    Available for opportunities · 2026
-  </p>
-  <h1 class="hero-name">
-    <span class="glitch" data-text="LUC">LUC</span>
-    <span class="outline glitch" data-text="DEVELOPER">DEVELOPER</span>
-  </h1>
-  <div class="hero-divider"></div>
-  <p class="hero-role"><i class="fa-solid fa-code"></i> Web Developer &amp; Full Stack Engineer</p>
-  <div class="hero-scroll"><i class="fa-solid fa-chevron-down"></i> Scroll</div>
-  <div class="hero-index">01</div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">
+      <span class="pulse-dot"></span>
+      Available for opportunities · 2026
+    </p>
+    <h1 class="hero-title">Hi, I'm <span class="gradient-text">Luc</span>.</h1>
+    <p class="hero-subtitle">Web Developer &amp; Full Stack Engineer</p>
+    <p class="hero-bio">
+      Based in Cavite, Philippines, I'm a graduating IT student at DLSU-Dasmariñas and a <strong>full stack developer</strong> specializing in web development — from crafting intuitive UI/UX designs to building robust backend architectures. I enjoy writing clean code across multiple languages and turning ideas into functional, hosted systems.
+    </p>
+    <div class="hero-ctas">
+      <a href="#work" class="cta-button primary magnetic">View Work <i class="fa-solid fa-arrow-down"></i></a>
+      <a href="#contact" class="cta-button secondary magnetic">Get in Touch <i class="fa-solid fa-paper-plane"></i></a>
+    </div>
+    <div class="hero-skills">
+      <span class="skill-badge"><i class="fa-brands fa-react"></i> React 19</span>
+      <span class="skill-badge"><i class="fa-brands fa-node-js"></i> Node.js</span>
+      <span class="skill-badge"><i class="fa-brands fa-html5"></i> HTML5 / CSS3</span>
+      <span class="skill-badge"><i class="fa-solid fa-database"></i> MongoDB</span>
+      <span class="skill-badge"><i class="fa-solid fa-database"></i> Supabase</span>
+      <span class="skill-badge"><i class="fa-brands fa-js"></i> JavaScript</span>
+      <span class="skill-badge"><i class="fa-solid fa-bolt"></i> Vite</span>
+      <span class="skill-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> Framer Motion</span>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="av-glow"></div>
+    <div class="av-box">
+      <div class="av-corner tl"></div>
+      <div class="av-corner tr"></div>
+      <div class="av-corner bl"></div>
+      <div class="av-corner br"></div>
+      <img src="photo.jpg?v=2" alt="Luc — Full Stack Developer" class="av-photo">
+      <div class="av-tag"><i class="fa-solid fa-location-dot"></i> Luc · Cavite, PH</div>
+    </div>
+  </div>
 </section>
 
 <!-- ── MARQUEE ── -->
@@ -1028,40 +936,6 @@
     <span><i class="fa-solid fa-diamond"></i> UI / UX Design</span>
   </div>
 </div>
-
-<!-- ── ABOUT ── -->
-<section id="about">
-  <div class="about-content">
-    <p class="section-label"><span class="section-num">01</span> <i class="fa-solid fa-terminal"></i> About</p>
-    <h2 class="about-heading reveal-left">I BUILD<br><em>DIGITAL</em><br>SYSTEMS</h2>
-    <p class="about-bio reveal-left">
-      Based in Cavite, Philippines, I'm a <strong>full stack developer</strong> specializing in <strong>web development</strong> — from crafting intuitive UI/UX designs to building robust backend architectures. I enjoy tackling complex logic, writing clean code across multiple languages, and turning ideas into functional, hosted systems. Currently a <strong>graduating IT student at DLSU-Dasmariñas</strong>, focused on <span class="highlight">web application development</span>, <span class="highlight">system architecture</span>, and <span class="highlight">designing seamless user experiences</span>.
-    </p>
-    <div class="skills-grid reveal">
-      <div class="skill-item"><i class="fa-brands fa-react"></i> React 19</div>
-      <div class="skill-item"><i class="fa-brands fa-node-js"></i> Node.js / Express</div>
-      <div class="skill-item"><i class="fa-brands fa-html5"></i> HTML5 / CSS3</div>
-      <div class="skill-item"><i class="fa-solid fa-database"></i> MongoDB / Mongoose</div>
-      <div class="skill-item"><i class="fa-solid fa-database"></i> Supabase / PostgreSQL</div>
-      <div class="skill-item"><i class="fa-brands fa-js"></i> JavaScript</div>
-      <div class="skill-item"><i class="fa-solid fa-bolt"></i> Vite</div>
-      <div class="skill-item"><i class="fa-solid fa-wand-magic-sparkles"></i> Framer Motion</div>
-      <div class="skill-item"><i class="fa-solid fa-palette"></i> UI / UX Design</div>
-      <div class="skill-item"><i class="fa-solid fa-pen-ruler"></i> Web Design</div>
-    </div>
-  </div>
-  <div class="about-visual reveal-right">
-    <div class="av-glow"></div>
-    <div class="av-box">
-      <div class="av-corner tl"></div>
-      <div class="av-corner tr"></div>
-      <div class="av-corner bl"></div>
-      <div class="av-corner br"></div>
-      <img src="photo.jpg?v=2" alt="Luc — Full Stack Developer" class="av-photo">
-      <div class="av-tag"><i class="fa-solid fa-location-dot"></i> Luc · Cavite, PH</div>
-    </div>
-  </div>
-</section>
 
 <!-- ── WORK ── -->
 <section id="work">
@@ -1272,7 +1146,7 @@
     }
     loaderCount.textContent = Math.floor(loadProgress);
     loaderFill.style.width = loadProgress + '%';
-  }, 120);
+  }, 40);
 
   // ── Scroll progress bar ──
   const scrollProgress = document.getElementById('scroll-progress');
@@ -1281,39 +1155,6 @@
     const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const progress = (scrollTop / scrollHeight) * 100;
     scrollProgress.style.width = progress + '%';
-  });
-
-  // ── Custom cursor with trail ──
-  const cursor = document.getElementById('cursor');
-  const trail = document.getElementById('cursor-trail');
-  let mouseX = 0, mouseY = 0;
-  let trailX = 0, trailY = 0;
-
-  document.addEventListener('mousemove', e => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursor.style.left = mouseX - 6 + 'px';
-    cursor.style.top  = mouseY - 6 + 'px';
-  });
-
-  function animateTrail() {
-    trailX += (mouseX - trailX) * 0.15;
-    trailY += (mouseY - trailY) * 0.15;
-    trail.style.left = trailX - 15 + 'px';
-    trail.style.top  = trailY - 15 + 'px';
-    requestAnimationFrame(animateTrail);
-  }
-  animateTrail();
-
-  document.querySelectorAll('a, button, .project-item, .skill-item, .contact-link').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.classList.add('big');
-      trail.classList.add('big');
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('big');
-      trail.classList.remove('big');
-    });
   });
 
   // ── Magnetic effect ──
@@ -1366,95 +1207,6 @@
     });
   });
 
-  // ── Click burst particles ──
-  document.addEventListener('click', e => {
-    const colors = ['#c0c0c0', '#ffffff', '#808080', '#f5f5f0'];
-    for (let i = 0; i < 8; i++) {
-      const burst = document.createElement('div');
-      burst.className = 'click-burst';
-      burst.style.left = e.clientX + 'px';
-      burst.style.top = e.clientY + 'px';
-      burst.style.background = colors[Math.floor(Math.random() * colors.length)];
-      const angle = (Math.PI * 2 / 8) * i;
-      const dist = 30 + Math.random() * 30;
-      const tx = Math.cos(angle) * dist;
-      const ty = Math.sin(angle) * dist;
-      burst.style.transition = `transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.5s`;
-      document.body.appendChild(burst);
-      requestAnimationFrame(() => {
-        burst.style.transform = `translate(${tx}px, ${ty}px) scale(0)`;
-        burst.style.opacity = '0';
-      });
-      setTimeout(() => burst.remove(), 600);
-    }
-  });
-
-  // ── Text scramble effect ──
-  class TextScramble {
-    constructor(el) {
-      this.el = el;
-      this.chars = '!<>-_\\/[]{}—=+*^?#_';
-      this.update = this.update.bind(this);
-    }
-    setText(newText) {
-      const oldText = this.el.innerText;
-      const length = Math.max(oldText.length, newText.length);
-      const promise = new Promise(resolve => this.resolve = resolve);
-      this.queue = [];
-      for (let i = 0; i < length; i++) {
-        const from = oldText[i] || '';
-        const to = newText[i] || '';
-        const start = Math.floor(Math.random() * 20);
-        const end = start + Math.floor(Math.random() * 20);
-        this.queue.push({ from, to, start, end });
-      }
-      cancelAnimationFrame(this.frameRequest);
-      this.frame = 0;
-      this.update();
-      return promise;
-    }
-    update() {
-      let output = '';
-      let complete = 0;
-      for (let i = 0, n = this.queue.length; i < n; i++) {
-        let { from, to, start, end, char } = this.queue[i];
-        if (this.frame >= end) {
-          complete++;
-          output += to;
-        } else if (this.frame >= start) {
-          if (!char || Math.random() < 0.28) {
-            char = this.chars[Math.floor(Math.random() * this.chars.length)];
-            this.queue[i].char = char;
-          }
-          output += `<span style="color:var(--glow)">${char}</span>`;
-        } else {
-          output += from;
-        }
-      }
-      this.el.innerHTML = output;
-      if (complete === this.queue.length) {
-        this.resolve();
-      } else {
-        this.frameRequest = requestAnimationFrame(this.update);
-        this.frame++;
-      }
-    }
-  }
-
-  // Apply scramble to hero name letters after load
-  const heroNameEl = document.querySelector('.hero-name .glitch');
-  const heroOutlineEl = document.querySelector('.hero-name .outline.glitch');
-  setTimeout(() => {
-    if (heroNameEl) {
-      const fx1 = new TextScramble(heroNameEl);
-      fx1.setText('LUC');
-    }
-    if (heroOutlineEl) {
-      const fx2 = new TextScramble(heroOutlineEl);
-      setTimeout(() => fx2.setText('DEVELOPER'), 400);
-    }
-  }, 1800);
-
   // ── 3D tilt effect on about visual ──
   const avBox = document.querySelector('.av-box');
   if (avBox) {
@@ -1471,94 +1223,6 @@
     avBox.addEventListener('mouseenter', () => {
       avBox.style.transition = 'none';
     });
-  }
-
-  // ── Letter splitting for section headings ──
-  document.querySelectorAll('.about-heading, .work-heading, .contact-heading').forEach(heading => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !heading.dataset.split) {
-          heading.dataset.split = 'true';
-          const html = heading.innerHTML;
-          const parts = html.split(/(<br>|<em>|<\/em>)/);
-          let newHtml = '';
-          let delay = 0;
-          parts.forEach(part => {
-            if (part === '<br>') { newHtml += '<br>'; return; }
-            if (part === '<em>') { newHtml += '<em>'; return; }
-            if (part === '</em>') { newHtml += '</em>'; return; }
-            const isEm = false;
-            const chars = part.split('');
-            chars.forEach(char => {
-              if (char === ' ') {
-                newHtml += ' ';
-              } else {
-                newHtml += `<span class="split-letter" style="animation-delay:${delay}s">${char}</span>`;
-                delay += 0.03;
-              }
-            });
-          });
-          heading.innerHTML = newHtml;
-        }
-      });
-    }, { threshold: 0.3 });
-    observer.observe(heading);
-  });
-
-  // ── Skill items staggered reveal with letter animation ──
-  const skillItems = document.querySelectorAll('.skill-item');
-  const skillObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const items = entry.target.parentElement.querySelectorAll('.skill-item');
-        items.forEach((item, i) => {
-          item.style.opacity = '0';
-          item.style.transform = 'translateY(20px)';
-          setTimeout(() => {
-            item.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1)';
-            item.style.opacity = '1';
-            item.style.transform = 'translateY(0)';
-          }, i * 80);
-        });
-        skillObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-  if (skillItems.length > 0) skillObserver.observe(skillItems[0]);
-
-  // ── Parallax on scroll ──
-  const heroName = document.querySelector('.hero-name');
-  const heroEyebrow = document.querySelector('.hero-eyebrow');
-  const heroRole = document.querySelector('.hero-role');
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    if (scrollY < window.innerHeight) {
-      const factor = scrollY * 0.3;
-      if (heroName) heroName.style.transform = `translateY(${factor}px)`;
-      if (heroEyebrow) heroEyebrow.style.transform = `translateY(${factor * 0.5}px)`;
-      if (heroRole) heroRole.style.transform = `translateY(${factor * 0.7}px)`;
-    }
-  });
-
-  // ── Animated counter for hero index ──
-  const heroIndex = document.querySelector('.hero-index');
-  if (heroIndex) {
-    let counted = false;
-    const counterObs = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !counted) {
-          counted = true;
-          let current = 0;
-          const target = 1;
-          const interval = setInterval(() => {
-            current++;
-            heroIndex.textContent = String(current).padStart(2, '0');
-            if (current >= target) clearInterval(interval);
-          }, 600);
-        }
-      });
-    });
-    counterObs.observe(heroIndex);
   }
 
   // ── Marquee hover pause ──
