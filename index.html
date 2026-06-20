@@ -362,70 +362,76 @@
 
   /* ── PROJECTS ── */
   #work { background: var(--bg); }
-  .proj-list { display: flex; flex-direction: column; gap: 64px; }
-  .proj-item { cursor: pointer; }
-  .proj-img-wrap {
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: #1a1a1a;
-    aspect-ratio: 16/9;
-    margin-bottom: 20px;
-    position: relative;
+  .proj-list { display: flex; flex-direction: column; gap: 0; }
+  .proj-item {
+    cursor: pointer;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    column-gap: 24px;
+    row-gap: 0;
+    transition: background 0.2s;
   }
-  .proj-img-wrap img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.7s cubic-bezier(0.16,1,0.3,1), opacity 0.4s;
-    opacity: 0.88;
-  }
-  .proj-item:hover .proj-img-wrap img { transform: scale(1.04); opacity: 1; }
-  .proj-placeholder {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-    font-size: 48px;
-    color: rgba(255,255,255,0.2);
-    position: absolute; inset: 0;
-  }
-  .proj-overlay {
-    position: absolute; top: 16px; right: 16px;
-    display: flex; gap: 8px;
-  }
+  .proj-item:first-child { border-top: 1px solid var(--rule); }
+  .proj-item:hover { background: rgba(0,0,0,0.015); }
+  .proj-expand { grid-column: 1 / -1; }
   .proj-tag {
-    background: rgba(240,240,238,0.95);
-    color: var(--ink);
+    display: inline-block;
+    background: var(--bg2);
+    color: var(--mid);
     font-size: 11px; font-weight: 600;
-    padding: 5px 12px;
+    padding: 3px 10px;
     border-radius: 100px;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
   }
   .proj-meta {
-    display: flex; align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
+    display: contents;
   }
   .proj-name {
-    font-size: clamp(22px, 3.5vw, 34px);
+    font-size: clamp(20px, 3vw, 30px);
     font-weight: 800;
-    letter-spacing: -1px;
+    letter-spacing: -0.8px;
     color: var(--ink);
     transition: color 0.2s;
+    grid-column: 1;
   }
   .proj-item:hover .proj-name { color: #444; }
   .proj-role {
-    font-size: 13px; font-weight: 500;
+    font-size: 12px; font-weight: 500;
     color: var(--mid);
     white-space: nowrap;
     flex-shrink: 0;
+    padding-top: 6px;
+  }
+  .proj-chevron {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+    color: var(--mid);
+    font-size: 14px;
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.2s;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .proj-item.is-open .proj-chevron {
+    transform: rotate(180deg);
+    background: var(--ink);
+    color: #f0f0ee;
+    border-color: var(--ink);
   }
   .proj-expand {
-    margin-top: 0;
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.4s;
+    transition: max-height 0.55s cubic-bezier(0.16,1,0.3,1), opacity 0.4s;
     opacity: 0;
   }
-  .proj-expand.open { max-height: 1200px; opacity: 1; }
+  .proj-expand.open { max-height: 2400px; opacity: 1; }
   .proj-detail-inner {
     padding: 24px 0 0;
     border-top: 1px solid var(--rule);
@@ -823,17 +829,12 @@
 
       <!-- LabLinx -->
       <div class="proj-item reveal" onclick="toggleProject(this)">
-        <div class="proj-img-wrap">
-          <img src="images/lablinx-landing.png" alt="LabLinx — Lab Reservation &amp; Monitoring System" />
-          <div class="proj-overlay">
-            <span class="proj-tag">2025–2026</span>
-            <span class="proj-tag">Web Dev Lead</span>
-          </div>
-        </div>
-        <div class="proj-meta">
+        <div>
+          <span class="proj-tag">2025–2026 · Web Dev Lead</span>
           <div class="proj-name">LabLinx — Lab Reservation &amp; Monitoring System</div>
           <div class="proj-role">Node.js · MongoDB</div>
         </div>
+        <div class="proj-chevron">&#8964;</div>
         <div class="proj-expand" onclick="event.stopPropagation()">
           <div class="proj-detail-inner">
             <div class="detail-section-title">Overview</div>
@@ -845,11 +846,15 @@
             </ul>
             <div class="detail-section-title">System Interfaces</div>
             <button class="gallery-toggle" onclick="toggleGallery(this)" type="button">
-              <span>📷 View Screenshots (3)</span>
+              <span>📷 View Screenshots (4)</span>
               <span class="toggle-icon">&#8964;</span>
             </button>
             <div class="gallery-wrap">
               <div class="proj-gallery">
+                <div class="gallery-item">
+                  <img src="images/lablinx-landing.png" alt="Landing Page" />
+                  <div class="gallery-label">Landing Page</div>
+                </div>
                 <div class="gallery-item">
                   <img src="images/lablinx-admin.png" alt="Super Admin Dashboard" />
                   <div class="gallery-label">Super Admin Dashboard</div>
@@ -889,17 +894,12 @@
 
       <!-- Jemrald Foodhouse -->
       <div class="proj-item reveal" onclick="toggleProject(this)">
-        <div class="proj-img-wrap">
-          <img src="images/jemrald-cover.png" alt="Jemrald Foodhouse — Restaurant Platform" />
-          <div class="proj-overlay">
-            <span class="proj-tag">2026</span>
-            <span class="proj-tag">Full-Stack</span>
-          </div>
-        </div>
-        <div class="proj-meta">
+        <div>
+          <span class="proj-tag">2026 · Full-Stack</span>
           <div class="proj-name">Jemrald Foodhouse — Restaurant Platform</div>
           <div class="proj-role">React · Supabase</div>
         </div>
+        <div class="proj-chevron">&#8964;</div>
         <div class="proj-expand" onclick="event.stopPropagation()">
           <div class="proj-detail-inner">
             <div class="detail-section-title">Overview</div>
@@ -909,11 +909,15 @@
             </ul>
             <div class="detail-section-title">System Interfaces</div>
             <button class="gallery-toggle" onclick="toggleGallery(this)" type="button">
-              <span>📷 View Screenshots (5)</span>
+              <span>📷 View Screenshots (6)</span>
               <span class="toggle-icon">&#8964;</span>
             </button>
             <div class="gallery-wrap">
               <div class="proj-gallery">
+                <div class="gallery-item">
+                  <img src="images/jemrald-cover.png" alt="Landing Page" />
+                  <div class="gallery-label">Landing Page</div>
+                </div>
                 <div class="gallery-item gallery-item--mobile">
                   <img src="images/jemrald-menu.png" alt="Customer Menu" />
                   <div class="gallery-label">Customer Menu</div>
@@ -958,17 +962,12 @@
 
       <!-- Umonics -->
       <div class="proj-item reveal" onclick="toggleProject(this)">
-        <div class="proj-img-wrap">
-          <img src="images/umonics-dashboard.png" alt="Umonics — HR Dashboard &amp; Intern Management" />
-          <div class="proj-overlay">
-            <span class="proj-tag">2026</span>
-            <span class="proj-tag">Front-End</span>
-          </div>
-        </div>
-        <div class="proj-meta">
+        <div>
+          <span class="proj-tag">2026 · Front-End</span>
           <div class="proj-name">Umonics — HR Dashboard &amp; Intern Management</div>
           <div class="proj-role">React · Tailwind</div>
         </div>
+        <div class="proj-chevron">&#8964;</div>
         <div class="proj-expand" onclick="event.stopPropagation()">
           <div class="proj-detail-inner">
             <div class="detail-section-title">Overview</div>
@@ -1122,10 +1121,18 @@
     const isOpen = expand.classList.contains('open');
     // close all
     document.querySelectorAll('.proj-expand.open').forEach(e => e.classList.remove('open'));
+    document.querySelectorAll('.proj-item.is-open').forEach(e => e.classList.remove('is-open'));
     // also close all open galleries when switching projects
     document.querySelectorAll('.gallery-wrap.open').forEach(e => e.classList.remove('open'));
-    document.querySelectorAll('.gallery-toggle.open').forEach(e => e.classList.remove('open'));
-    if (!isOpen) expand.classList.add('open');
+    document.querySelectorAll('.gallery-toggle.open').forEach(e => {
+      e.classList.remove('open');
+      const span = e.querySelector('span:first-child');
+      if (span) span.textContent = span.textContent.replace('Hide', 'View');
+    });
+    if (!isOpen) {
+      expand.classList.add('open');
+      item.classList.add('is-open');
+    }
   }
 
   // ── Gallery toggle ──
