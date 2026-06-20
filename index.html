@@ -482,11 +482,45 @@
   .proj-link:hover { background: #333; transform: translateY(-1px); }
 
   /* ── Project Gallery ── */
+  .gallery-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: 100px;
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.01em;
+  }
+  .gallery-toggle:hover { background: var(--rule); }
+  .gallery-toggle .toggle-icon {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+  .gallery-toggle.open .toggle-icon { transform: rotate(180deg); }
+  .gallery-wrap {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease;
+  }
+  .gallery-wrap.open {
+    max-height: 2000px;
+    opacity: 1;
+  }
   .proj-gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 16px;
-    margin-top: 16px;
+    margin-top: 12px;
     margin-bottom: 8px;
   }
   .gallery-item {
@@ -502,8 +536,15 @@
     display: block;
     transition: transform 0.3s;
   }
-  .gallery-item:hover img {
-    transform: scale(1.02);
+  .gallery-item:hover img { transform: scale(1.02); }
+  /* Mobile/portrait screenshots */
+  .gallery-item--mobile {
+    background: #0d0d0d;
+  }
+  .gallery-item--mobile img {
+    aspect-ratio: 9/18;
+    object-fit: contain;
+    padding: 8px;
   }
   .gallery-label {
     font-size: 11px;
@@ -803,18 +844,24 @@
               <li>Nominated for Best Thesis/Capstone Project (2026).</li>
             </ul>
             <div class="detail-section-title">System Interfaces</div>
-            <div class="proj-gallery">
-              <div class="gallery-item">
-                <img src="images/lablinx-admin.png" alt="Super Admin Dashboard" />
-                <div class="gallery-label">Super Admin Dashboard</div>
-              </div>
-              <div class="gallery-item">
-                <img src="images/lablinx-scan.png" alt="Live Scan Transaction" />
-                <div class="gallery-label">Live Scan Transaction</div>
-              </div>
-              <div class="gallery-item">
-                <img src="images/lablinx-dashboard.png" alt="Borrower Dashboard" />
-                <div class="gallery-label">Borrower Dashboard</div>
+            <button class="gallery-toggle" onclick="toggleGallery(this)" type="button">
+              <span>📷 View Screenshots (3)</span>
+              <span class="toggle-icon">&#8964;</span>
+            </button>
+            <div class="gallery-wrap">
+              <div class="proj-gallery">
+                <div class="gallery-item">
+                  <img src="images/lablinx-admin.png" alt="Super Admin Dashboard" />
+                  <div class="gallery-label">Super Admin Dashboard</div>
+                </div>
+                <div class="gallery-item">
+                  <img src="images/lablinx-scan.png" alt="Live Scan Transaction" />
+                  <div class="gallery-label">Live Scan Transaction</div>
+                </div>
+                <div class="gallery-item">
+                  <img src="images/lablinx-dashboard.png" alt="Borrower Dashboard" />
+                  <div class="gallery-label">Borrower Dashboard</div>
+                </div>
               </div>
             </div>
             <div class="detail-section-title">Architecture</div>
@@ -861,26 +908,32 @@
               <li>Developed customer, administrative, and analytics modules with real-time WebSocket channels.</li>
             </ul>
             <div class="detail-section-title">System Interfaces</div>
-            <div class="proj-gallery">
-              <div class="gallery-item">
-                <img src="images/jemrald-menu.png" alt="Customer Menu" />
-                <div class="gallery-label">Customer Menu</div>
-              </div>
-              <div class="gallery-item">
-                <img src="images/jemrald-checkout.png" alt="Checkout Page" />
-                <div class="gallery-label">Checkout Page</div>
-              </div>
-              <div class="gallery-item">
-                <img src="images/jemrald-order-details.png" alt="Order Details" />
-                <div class="gallery-label">Order Details</div>
-              </div>
-              <div class="gallery-item">
-                <img src="images/jemrald-tracker.png" alt="Order Tracker" />
-                <div class="gallery-label">Order Tracker</div>
-              </div>
-              <div class="gallery-item">
-                <img src="images/jemrald-admin.png" alt="Admin Dashboard" />
-                <div class="gallery-label">Admin Dashboard</div>
+            <button class="gallery-toggle" onclick="toggleGallery(this)" type="button">
+              <span>📷 View Screenshots (5)</span>
+              <span class="toggle-icon">&#8964;</span>
+            </button>
+            <div class="gallery-wrap">
+              <div class="proj-gallery">
+                <div class="gallery-item gallery-item--mobile">
+                  <img src="images/jemrald-menu.png" alt="Customer Menu" />
+                  <div class="gallery-label">Customer Menu</div>
+                </div>
+                <div class="gallery-item gallery-item--mobile">
+                  <img src="images/jemrald-checkout.png" alt="Checkout Page" />
+                  <div class="gallery-label">Checkout Page</div>
+                </div>
+                <div class="gallery-item gallery-item--mobile">
+                  <img src="images/jemrald-order-details.png" alt="Order Details" />
+                  <div class="gallery-label">Order Details</div>
+                </div>
+                <div class="gallery-item gallery-item--mobile">
+                  <img src="images/jemrald-tracker.png" alt="Order Tracker" />
+                  <div class="gallery-label">Order Tracker</div>
+                </div>
+                <div class="gallery-item">
+                  <img src="images/jemrald-admin.png" alt="Admin Dashboard" />
+                  <div class="gallery-label">Admin Dashboard</div>
+                </div>
               </div>
             </div>
             <div class="detail-section-title">Architecture</div>
@@ -924,14 +977,20 @@
               <li>Improved UI consistency, usability, and workflow efficiency across the platform.</li>
             </ul>
             <div class="detail-section-title">System Interfaces</div>
-            <div class="proj-gallery">
-              <div class="gallery-item">
-                <img src="images/umonics-dashboard.png" alt="Intern Dashboard" />
-                <div class="gallery-label">Intern Dashboard</div>
-              </div>
-              <div class="gallery-item">
-                <img src="images/umonics-resources.png" alt="Intern Resources" />
-                <div class="gallery-label">Intern Resources</div>
+            <button class="gallery-toggle" onclick="toggleGallery(this)" type="button">
+              <span>📷 View Screenshots (2)</span>
+              <span class="toggle-icon">&#8964;</span>
+            </button>
+            <div class="gallery-wrap">
+              <div class="proj-gallery">
+                <div class="gallery-item">
+                  <img src="images/umonics-dashboard.png" alt="Intern Dashboard" />
+                  <div class="gallery-label">Intern Dashboard</div>
+                </div>
+                <div class="gallery-item">
+                  <img src="images/umonics-resources.png" alt="Intern Resources" />
+                  <div class="gallery-label">Intern Resources</div>
+                </div>
               </div>
             </div>
             <div class="detail-section-title">Architecture</div>
@@ -1063,7 +1122,23 @@
     const isOpen = expand.classList.contains('open');
     // close all
     document.querySelectorAll('.proj-expand.open').forEach(e => e.classList.remove('open'));
+    // also close all open galleries when switching projects
+    document.querySelectorAll('.gallery-wrap.open').forEach(e => e.classList.remove('open'));
+    document.querySelectorAll('.gallery-toggle.open').forEach(e => e.classList.remove('open'));
     if (!isOpen) expand.classList.add('open');
+  }
+
+  // ── Gallery toggle ──
+  function toggleGallery(btn) {
+    const wrap = btn.nextElementSibling;
+    const isOpen = wrap.classList.contains('open');
+    wrap.classList.toggle('open');
+    btn.classList.toggle('open');
+    if (!isOpen) {
+      btn.querySelector('span:first-child').textContent = btn.querySelector('span:first-child').textContent.replace('View', 'Hide');
+    } else {
+      btn.querySelector('span:first-child').textContent = btn.querySelector('span:first-child').textContent.replace('Hide', 'View');
+    }
   }
 </script>
 </body>
